@@ -4,17 +4,16 @@ class Train {
     String name;
     String route;
     boolean[] seats; 
-    List<String> waitingList; // To store waiting list
+    List<String> waitingList; 
 
     public Train(String name, String route) {
         this.name = name;
         this.route = route;
-        this.seats = new boolean[100]; // 100 seats available initially
-        Arrays.fill(this.seats, true); // All seats are initially available
+        this.seats = new boolean[100]; 
+        Arrays.fill(this.seats, true); 
         this.waitingList = new ArrayList<>();
     }
 
-    // Display available seats for a given train
     public void displayAvailableSeats() {
         System.out.println("\nAvailable seats in " + this.name + " (" + this.route + "):");
         List<Integer> availableSeats = new ArrayList<>();
@@ -193,16 +192,16 @@ public class Railwayreservation {
         if (choice >= 1 && choice <= availableTrains.size()) {
             Train selectedTrain = availableTrains.get(choice - 1);
 
-            selectedTrain.displayAvailableSeats(); // Show available seats
+            selectedTrain.displayAvailableSeats(); 
 
             System.out.print("Select seat (Enter seat number): ");
             int seatChoice = sc.nextInt();
             sc.nextLine();
 
             if (seatChoice >= 1 && seatChoice <= 100 && selectedTrain.seats[seatChoice - 1]) {
-                selectedTrain.seats[seatChoice - 1] = false; // Seat booked
+                selectedTrain.seats[seatChoice - 1] = false; 
                 user.bookedTrain = selectedTrain;
-                user.seatNumber = seatChoice; // Assign the seat number (1-based)
+                user.seatNumber = seatChoice; 
                 System.out.println("Seat booked successfully in " + selectedTrain.name + ". Seat Number: " + user.seatNumber);
             } else {
                 System.out.println("Invalid or already booked seat.");
@@ -219,10 +218,9 @@ public class Railwayreservation {
         }
 
         Train bookedTrain = user.bookedTrain;
-        bookedTrain.seats[user.seatNumber - 1] = true; // Free up the seat
+        bookedTrain.seats[user.seatNumber - 1] = true; 
         System.out.println("Booking canceled for " + bookedTrain.name + ". Seat Number: " + user.seatNumber);
 
-        // Check if anyone is on the waiting list
         if (!bookedTrain.waitingList.isEmpty()) {
             String nextUserInWaitingList = bookedTrain.waitingList.remove(0);
             User waitingUser = users.get(nextUserInWaitingList);
@@ -231,7 +229,6 @@ public class Railwayreservation {
             System.out.println("Seat allocated to waiting user: " + nextUserInWaitingList + ". Seat Number: " + user.seatNumber);
         }
 
-        // Reset user booking information
         user.bookedTrain = null;
         user.seatNumber = -1;
     }
